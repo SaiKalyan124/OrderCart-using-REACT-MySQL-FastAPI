@@ -1,0 +1,310 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card {
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    width: 50%;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    left:50%;
+    transform: translateX(-50%);
+    border-radius: 30px;
+  }
+
+  .card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  }
+
+.order-details{
+  background-color: rgb(217, 231, 235);
+  border-radius: 40px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 0px;
+  border: 1px solid #d1c8c8;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;}
+  
+  .card-header {
+    background-color: #dbe1e2;
+    padding: 15px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  }
+  .left-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .left-column h3{
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+  }
+  .left-column h4{
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+  }
+
+
+  .card-title,
+.card-text {
+  margin-bottom: 0.5rem;
+  text-align: right;
+}
+  .right-column *{
+    display: block;
+  float: left;
+  clear: left;
+    
+  }
+  .right-column h3{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+  .right-column{
+    text-align: left;
+  }
+  .right-column:hover {
+    color: #cf3f3f;
+  }
+  .card-header h3{
+    margin:0;
+
+  }
+  .card-header h5{
+    margin: 0;
+
+  }
+  .right-column {
+    position: relative;
+  }
+  .popup-card {
+    position: absolute;
+    color: #1b1a1a;
+    top: 150%;
+    left: -80%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(0, 0, 0);
+    width: 80%;
+    /* padding: 5px; */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    /* z-index: 1; */
+    display: none;
+  }
+  .right-column:hover .popup-card {
+    display: block;
+  }
+   
+  .card-body {
+    padding: 15px;
+  }
+  
+  .card-subtitle {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .list-group {
+    margin-top: 10px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    
+  }
+  
+  .list-group-item {
+    border: none;
+    font-size: 20px;
+    height: 30px;
+    width: 150px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  }
+  .list-group-item {
+    list-style-type: none;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #d1c8c8;
+    transition: all 0.3s ease-in-out;
+  }
+  .Modal {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    right: 40px;
+    bottom: 60px;
+    height:500px;
+    width: 300px;
+  border-radius: 25px;
+  text-align: center;
+    box-shadow: #1b1a1a;
+  }
+  .list-group-item:hover {
+    background-color: #d8db00;
+  }
+  Form{
+    background-color: #fdfdfd !important;
+    box-shadow: 10px 8px 8px 10px rgba(36, 28, 28, 0.2) !important;
+    overflow: 100px !important;
+    width:150% !important;
+    /* left: 50% !important;
+    height: 80px; */
+    /* position: absolute; */
+    margin-top: -80px !important;
+    
+  }
+  select {
+    width: 100%;
+    height: 40px;
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 40px;
+    box-shadow: none;
+    background-color: #fff;
+    color: #444;
+    outline: none;
+  }
+  
+  select:hover,
+  select:focus {
+    border-color: #333;
+  }
+  
+  select[multiple] {
+    height: auto;
+  }
+  
+  select[multiple] option {
+    padding: 6px 12px;
+  }
+  
+  option[selected] {
+    background-color: #ddd;
+  }
+  
+  option:hover {
+    background-color: #f6f6f6;
+  }
+
+  .delete-button {
+    background-color: #f35353; /* Green */
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    width: 20%;
+    margin: 6px 50px;
+    cursor: pointer;
+    border-radius: 20px;
+    box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.2);
+
+  }
+  .edit-button {
+    background-color: #b4beb5; /* Green */
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    width: 50%;
+    margin: 6px 100px;
+    cursor: pointer;
+    border-radius: 20px;
+    box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.2);
+
+  }
+    .button-88 {
+    background-color: #59ce59;
+    
+    border: none;
+    border-radius: 25px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #1b1a1a;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .button-88:hover {
+    background-color: #09db4f;
+    color: #fff;
+    border-radius: 50px;
+  }
+  
+  
+  .button-88:active {
+    box-shadow: 0 0.3em 1em -0.5em #2dbd5498;
+  }
+    .button-88 {
+    background-color: #59ce59;
+    
+    border: none;
+    border-radius: 25px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #1b1a1a;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .button-88:hover {
+    background-color: #09db4f;
+    color: #fff;
+    border-radius: 50px;
+  }
+  
+  
+  .button-88:active {
+    box-shadow: 0 0.3em 1em -0.5em #2dbd5498;
+  }
+  
+  
+  .cancel-button-88 {
+    background-color: #e98181;
+    
+    border: none;
+    border-radius: 25px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #1b1a1a;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .cancel-button-88:hover {
+    background-color: #da0303;
+    color: #fff;
+    border-radius: 50px;
+  }
+  
+  
+  .cancel-button-88:active {
+    box-shadow: 0 0.3em 1em -0.5em #d60b0b98;
+  }

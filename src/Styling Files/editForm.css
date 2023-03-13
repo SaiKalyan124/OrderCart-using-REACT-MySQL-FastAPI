@@ -1,0 +1,37 @@
+.edit-form{
+    justify-content: center !important;
+    /* display: flex; */
+    height: 850px !important;
+    width:500px !important;
+    overflow: auto !important;
+    flex-direction: column !important;
+}
+.edit-form h3{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.edit-form::-webkit-scrollbar {
+    width: 10px; /* width of the scrollbar */
+  }
+  
+  .edit-form::-webkit-scrollbar-track {
+    background: #f1f1f1; /* color of the track */
+  }
+  
+  .edit-form::-webkit-scrollbar-thumb {
+    background: #888; /* color of the thumb */
+  }
+  
+  .edit-form::-webkit-scrollbar-thumb:hover {
+    background: #555; /* color of the thumb when hovered */
+  }
+input{
+    width: 80%;
+    padding: 6px 10px;
+    border-radius: 10px;
+    box-shadow: 4px 6px 8px 0px rgba(0, 0, 0, 0.2);
+    border-color: rgb(228, 224, 218);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+label{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}

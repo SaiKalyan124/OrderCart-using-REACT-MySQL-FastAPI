@@ -1,25 +1,42 @@
-import logo from './logo.svg';
+
 import './App.css';
+import Home from './UI PAGES/orders_page';
+import React, { useState, useEffect } from 'react';
+import syncreonlogo from './Images/logo.png'
+
+
 
 function App() {
+  const [headerClass, setHeaderClass] = useState('');
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const handleScroll = () => {
+    const scrollPosition = window.pageYOffset;
+
+    if (scrollPosition > 100) {
+      setHeaderClass('scrolled');
+    } else {
+      setHeaderClass('');
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className={`Header ${headerClass}`}>
+      <img src={syncreonlogo} alt="Logo" />
+        {/* <h1>Syncreon Technical Challenge</h1> */}
+      </div>
+      <div className="App">
+        <Home />
+      </div>
+    </>
   );
 }
-
 export default App;
