@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import "./../Styling Files/order_page.css"
+import "./../StylingFiles/order_page.css"
 import EditForm from './editForm';
 
 Modal.setAppElement('#root');
@@ -30,11 +30,12 @@ function OrderCard(props) {
       }));
       const updatedOrderData = {
         OrderID:order.OrderID,
-        CountryCode: formData.get('countryCode'), // Updated value
+         
         FullName: formData.get('fullName'),
         AddresType: formData.get('addressType'),
         AddressLine1: formData.get('addressLine1'),
         AddressLine2: formData.get('addressLine2'),
+        CountryCode: formData.get('countryCode'),
         OrderLines: updatedOrderLines, 
       };
       
@@ -76,9 +77,9 @@ function OrderCard(props) {
               <h3>{order.Email}</h3>
             <div class="popup-card">
               <h4>Address:</h4>
-              <p>{order.CountryCode}</p>
+              
               <p>{order.FullName}, {order.AddresType}</p>
-              <p>{order.AddressLine1}, {order.AddressLine2}</p>
+              <p>{order.AddressLine1}, {order.AddressLine2} -- {order.CountryCode}</p>
               
             </div>
           </div>

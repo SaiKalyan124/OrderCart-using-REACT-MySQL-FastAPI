@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./../Styling Files/order_page.css"
+import "./../StylingFiles/order_page.css"
 import OrderList from "./displayOrder";
 
 function Home() {

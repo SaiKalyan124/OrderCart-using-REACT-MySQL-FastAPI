@@ -1,9 +1,8 @@
 
 import './App.css';
-import Home from './UI Components/orders_page';
+import Home from './UI_Components/orders_page';
 import React, { useState, useEffect } from 'react';
 import syncreonlogo from './Images/logo.png'
-
 
 
 function App() {
@@ -28,7 +27,7 @@ function App() {
   };
 
   return (
-    <>
+    <>      
       <div className={`Header ${headerClass}`}>
       <img src={syncreonlogo} alt="Logo" />
         {/* <h1>Syncreon Technical Challenge</h1> */}

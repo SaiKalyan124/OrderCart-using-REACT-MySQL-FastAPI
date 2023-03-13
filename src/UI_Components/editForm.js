@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import "./../Styling Files/editForm.css"
+import "./../StylingFiles/editForm.css"
 
 function EditForm(props) {
   const { order ,items} = props;
@@ -21,12 +21,12 @@ function EditForm(props) {
     newOrderLines.splice(index, 1);
     setOrderLines(newOrderLines);
   };
-    console.log("orderlines",orderLines)
-    console.log("In EditForm",items)
-    const uniqueItems = [...new Set(items.map(item => item.ItemNum))];
+  const uniqueItems = [...new Set(items.map(item => item.ItemNum))];
+ 
+
   return (
     <form className='edit-form' onSubmit={(event) => props.onSubmit(event, orderLines)}>
-      <h3>Order #:{order.OrderID}</h3>
+      <h1>Order #{order.OrderID}</h1>
 
       <br />
       <label>
@@ -50,7 +50,7 @@ function EditForm(props) {
         <input type="text" name="addressLine2" placeholder={order.AddressLine2} defaultValue={order.AddressLine2} />
       </label>
       
-      <h4>Order Lines:</h4>
+      <h2>Cart:</h2>
         {orderLines.map((item, index) => (
           <div key={index}>
             <label>
@@ -72,6 +72,7 @@ function EditForm(props) {
           </div>
         ))}
         <br/>
+        <h4>Select the item to add to your Cart:</h4>
         <select 
           multiple 
           value={orderLines.map((item) => item.ItemNum)} 
@@ -108,10 +109,13 @@ function EditForm(props) {
   );
 })}
 </select>
-      <button type="button" onClick={handleAddItem} className='edit-button'>Add Item</button>
-      <br />
-      <button type="submit" className='button-88'>Save</button><br/>
+      
+      <button type="button" onClick={handleAddItem} className='add-button-88'>Add Item</button>
+      <br /><br />
+      <div className='form-buttons'>
+      <button type="submit" className='button-88'>Save</button><br/><br/>
       <button onClick={props.onCancel} className='cancel-button-88'>Cancel</button>
+      </div>
     </form>
   );
 }

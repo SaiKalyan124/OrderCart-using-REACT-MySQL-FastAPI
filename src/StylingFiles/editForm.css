@@ -1,7 +1,7 @@
 .edit-form{
     justify-content: center !important;
     /* display: flex; */
-    height: 850px !important;
+    height: 950px !important;
     width:500px !important;
     overflow: auto !important;
     flex-direction: column !important;
