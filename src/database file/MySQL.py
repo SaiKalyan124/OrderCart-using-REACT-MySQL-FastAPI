@@ -1,12 +1,11 @@
 import mysql.connector
 import os
 import xml.etree.ElementTree as ET
-from fastapi import FastAPI, HTTPException, Request, APIRouter
+from fastapi import FastAPI, Request
 import requests
 import json
-from pydantic import BaseModel,validator,Field
+from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, HTMLResponse
 
 app = FastAPI()
 app.add_middleware(
@@ -154,7 +153,7 @@ def read_xml_to_db():
 async def get_data():
   mycursor = mydb.cursor()
 
-  # Select all the details of order
+  # Select all the details of all orders
   select_query="""                
                 SELECT o.OrderID, o.ReferenceNumber, o.CountryCode, o.FullName, o.AddresType, o.AddressLine1, o.AddressLine2, 
                     c.CustomerCode,c.FirstName, c.LastName, c.Phone, c.Email,

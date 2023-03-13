@@ -1,6 +1,6 @@
 
 import './App.css';
-import Home from './UI PAGES/orders_page';
+import Home from './UI Components/orders_page';
 import React, { useState, useEffect } from 'react';
 import syncreonlogo from './Images/logo.png'
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./../Styling Files/order_page.css"
-import OrderList from "../Components/displayOrder";
+import OrderList from "./displayOrder";
 
 function Home() {
   const [orders, setOrders] = useState([]);

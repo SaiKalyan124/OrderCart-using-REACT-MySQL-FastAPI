@@ -86,21 +86,6 @@ function OrderCard(props) {
             <h3>Order #{order.OrderID}</h3>
             <h3>Ref # {order.ReferenceNumber}</h3>
           </div>
-
-
-          
-          {/* <div className="right-column">  
-              <h3>Ship To:</h3>
-            <h3 className="card-text" title={`
-                Address:
-                ${order.CountryCode}
-                ${order.FullName}, ${order.AddresType}
-                ${order.AddressLine1}, ${order.AddressLine2}`}>
-              {order.FirstName} {order.LastName} 
-            </h3>
-            <h3 className="card-text">{order.Phone}</h3>
-            <h3 className="card-text">{order.Email}</h3>
-          </div> */}
         </div>
         <div className="card-body">
           <h6 className="card-subtitle mb-2 text-muted"></h6>
