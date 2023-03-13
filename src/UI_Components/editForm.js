@@ -26,7 +26,7 @@ function EditForm(props) {
 
   return (
     <form className='edit-form' onSubmit={(event) => props.onSubmit(event, orderLines)}>
-      <h1>Order #{order.OrderID}</h1>
+      <h2>Order #{order.OrderID}</h2>
 
       <br />
       <label>
@@ -58,12 +58,12 @@ function EditForm(props) {
               <br/>{item.ItemNum}
               <br/>
               <input 
-                type="text" 
+                
                 name={`itemDescription${index}`} 
                 value={item.ItemDescription} 
-                onChange={(e) =>
-                  handleItemChange(index, { ItemDescription: e.target.value })
-                } 
+                // onChange={(e) =>
+                //   handleItemChange(index, { ItemDescription: e.target.value })
+                // } 
               />
             </label>
             {/* <button type="button" onClick={() => handleDeleteItem(item)} className="delete-button">Delete</button> */}
@@ -92,23 +92,23 @@ function EditForm(props) {
                 }
               }
             }
-            setOrderLines(newOrderLines);
-          }}
-        >
+              setOrderLines(newOrderLines);
+            }}
+          >
           <option value={null}>None</option>
-{uniqueItems.map((itemNum) => {
-  const item = items.find((i) => i.ItemNum === itemNum);
-  return (
-    <option 
-      key={itemNum} 
-      value={itemNum} 
-      selected={orderLines.some((line) => line.ItemNum === itemNum)}
-    >
-      {item.ItemDescription}
-    </option>
-  );
-})}
-</select>
+              {uniqueItems.map((itemNum) => {
+                const item = items.find((i) => i.ItemNum === itemNum);
+                return (
+                  <option 
+                    key={itemNum} 
+                    value={itemNum} 
+                    selected={orderLines.some((line) => line.ItemNum === itemNum)}
+                  >
+                    {item.ItemDescription}
+            </option>
+                );
+              })}
+          </select>
       
       <button type="button" onClick={handleAddItem} className='add-button-88'>Add Item</button>
       <br /><br />

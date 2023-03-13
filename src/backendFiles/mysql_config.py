@@ -5,5 +5,5 @@ mysql_config = {
   "host": "localhost",
   "user": "root",
   "password": "Password@124#",
-  "database": "Cart"
+  "database": "syncreonordercart"
 }

@@ -1,15 +1,16 @@
-import mysql.connector
-import os
-import xml.etree.ElementTree as ET
-from fastapi import FastAPI, Request
+from mysql_config import mysql_config
 import requests
 import json
+import os
+import xml.etree.ElementTree as ET
 from pydantic import BaseModel
+import mysql.connector
+from fastapi import FastAPI, Request
+
 from fastapi.middleware.cors import CORSMiddleware
-from mysql_config import mysql_config
+
 
 app = FastAPI()
-
 
 app.add_middleware(
     CORSMiddleware,
@@ -18,17 +19,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# mydb = mysql.connector.connect(
-#   host="localhost",
-#   user="root",
-#   password="Password@124#",
-#   database="Cart"
-# )
-
 mydb = mysql.connector.connect(**mysql_config)
-
-
-
 
 class order_items(BaseModel):
     ItemNum: str
@@ -76,14 +67,9 @@ def read_xml_to_db():
         for orderline in order.findall('./OrderLines/OrderLine'):
             orderline_count += 1
             orderline.set('seq', str(orderline_count))
-
         
         order.set('seq', str(order_count ))
   tree.write('output.xml', encoding='utf-8')
-
-
-
-
 
   # Loop through each order in the XML and insert into the OrderTable and OrderLineTable
   create_customer_table_query="""CREATE TABLE IF NOT EXISTS Customers (	
@@ -91,7 +77,8 @@ def read_xml_to_db():
                               FirstName varchar(255),	
                               LastName varchar(255),	
                               Phone varchar(255),	
-                              Email varchar(255)
+                              Email varchar(255),
+                              INDEX idx_customers_customerCode (CustomerCode)
                               );"""
   create_order_table_query=""" CREATE TABLE IF NOT EXISTS Orders (    
                                 OrderID INT PRIMARY KEY ,	
@@ -102,16 +89,22 @@ def read_xml_to_db():
                                 AddresType varchar(255),    
                                 AddressLine1 varchar(255),    
                                 AddressLine2 varchar(255),	
+                                INDEX idx_orders_customercode (CustomerCode),
+                                INDEX idx_orders_OrderID (OrderID),
                                 FOREIGN KEY (CustomerCode) REFERENCES Customers(CustomerCode))
+                                
                                     ;"""
   create_order_line_table_query="""CREATE TABLE IF NOT EXISTS  OrderLines (	
                                     OrderLineID INT, 
                                     ItemNum varchar(255) PRIMARY KEY,	
-                                    ItemDescription varchar(255)
+                                    ItemDescription varchar(255),
+                                    INDEX idx_orders_ItemNum (ItemNum)
                                     );"""
   create_order_to_orderlines="""CREATE TABLE IF NOT EXISTS OrderLineItemDetails(
                                 OrderID INT,
                                 ItemNum varchar(255),
+                                INDEX idx_orders_OrderID (OrderID),
+                                INDEX idx_orders_ItemNum (ItemNum),
                                 PRIMARY KEY (ItemNum, OrderID),
                                 FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
                                 FOREIGN KEY (ItemNum) REFERENCES OrderLines(ItemNum)
@@ -247,14 +240,6 @@ async def get_updated_data(request: Request):
         update_query = f"UPDATE OrderLines SET ItemDescription='{line_item['ItemDescription']}' WHERE ItemNum='{line_item['ItemNum']}'"
         mycursor.execute(update_query)
 
-    # Update the OrderLines table with new item descriptions
-    # update_query = "UPDATE OrderLines SET ItemDescription = CASE ItemNum WHEN %s THEN %s WHEN %s THEN %s WHEN %s THEN %s END WHERE ItemNum IN (%s, %s, %s)"
-    # update_values = (order_data['OrderLines'][0]['ItemNum'], order_data['OrderLines'][0]['ItemDescription'], order_data['OrderLines'][1]['ItemNum'], order_data['OrderLines'][1]['ItemDescription'], order_data['OrderLines'][2]['ItemNum'], order_data['OrderLines'][2]['ItemDescription'], order_data['OrderLines'][0]['ItemNum'], order_data['OrderLines'][1]['ItemNum'], order_data['OrderLines'][2]['ItemNum'])
-    # mycursor.execute(update_query, update_values)
-
-    # Commit the changes
     mydb.commit()
     orders_list = await get_data()
     return orders_list 
-
-

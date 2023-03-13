@@ -1,6 +1,6 @@
 .Header {
   position: fixed;
-  text-align: left;
+  text-align: center;
   top: 0;
   width: 100%;
   z-index: 100;
@@ -26,6 +26,13 @@
   text-align: center;
   padding-top: 10%; 
   
+}
+.Title{
+  position: absolute;
+  top:15%;
+  left: 15%;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size:x-large;
 }
 
 .App-logo {

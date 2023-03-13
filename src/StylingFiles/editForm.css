@@ -1,7 +1,7 @@
 .edit-form{
     justify-content: center !important;
     /* display: flex; */
-    height: 950px !important;
+    height: 800px !important;
     width:500px !important;
     overflow: auto !important;
     flex-direction: column !important;
@@ -34,4 +34,8 @@ input{
 }
 label{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.form-buttons{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
 }

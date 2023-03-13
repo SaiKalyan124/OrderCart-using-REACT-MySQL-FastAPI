@@ -33,6 +33,7 @@ function App() {
         {/* <h1>Syncreon Technical Challenge</h1> */}
       </div>
       <div className="App">
+        <div className='Title'>Order Cart:</div>
         <Home />
       </div>
     </>
