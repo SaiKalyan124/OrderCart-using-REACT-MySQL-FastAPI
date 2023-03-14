@@ -51,24 +51,24 @@ function EditForm(props) {
       </label>
       
       <h2>Cart:</h2>
-<table>
-  <thead>
-    <tr>
-      <th>Item Number</th>
-      <th>Item Description</th>
-      <th>Delete</th>
-    </tr>
-  </thead>
-  <tbody>
-    {orderLines.map((item, index) => (
-      <tr key={index}>
-        <td>{item.ItemNum}</td>
-        <td>{item.ItemDescription}</td>
-        <td><button className="delete-button"type="button" onClick={() => handleDeleteItem(index)}>Delete</button></td>
-      </tr>
-    ))}
-  </tbody>
-</table>
+          <table>
+            <thead>
+              <tr>
+                <th>Item Number</th>
+                <th>Item Description</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orderLines.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.ItemNum}</td>
+                  <td>{item.ItemDescription}</td>
+                  <td><button className="delete-button"type="button" onClick={() => handleDeleteItem(index)}>Delete</button></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         <h4>Select the item to add to your Cart:</h4>
         <select 
           multiple 
