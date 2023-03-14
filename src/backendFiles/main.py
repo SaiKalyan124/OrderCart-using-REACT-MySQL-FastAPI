@@ -1,12 +1,8 @@
 from mysql_config import mysql_config
-import requests
-import json
 import os
 import xml.etree.ElementTree as ET
-from pydantic import BaseModel
 import mysql.connector
 from fastapi import FastAPI, Request
-
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -32,7 +28,7 @@ def read_xml_to_db():
   orderline_count = 0
 
 
-  # Updating the XML file if there is any erroneous data 
+  # Updating the XML file if there is any erroneous data like in the given XML there multiple orders with same orderID
   for order in root.findall('./Orders/Order'):
         order_count += 1
         order.set('seq', str(order_count))
