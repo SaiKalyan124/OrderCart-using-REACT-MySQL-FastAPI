@@ -61,9 +61,7 @@ function EditForm(props) {
                 
                 name={`itemDescription${index}`} 
                 value={item.ItemDescription} 
-                // onChange={(e) =>
-                //   handleItemChange(index, { ItemDescription: e.target.value })
-                // } 
+                
               />
             </label>
             {/* <button type="button" onClick={() => handleDeleteItem(item)} className="delete-button">Delete</button> */}

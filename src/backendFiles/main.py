@@ -21,34 +21,6 @@ app.add_middleware(
 
 mydb = mysql.connector.connect(**mysql_config)
 
-class order_items(BaseModel):
-    ItemNum: str
-    ItemDescription:str
-
-class updated_order_date(BaseModel):
-    CountryCode:str
-    FullName:str
-    AddressType:str
-    AddressLine:str
-    AddressLine2:str
-    orderLines:list[order_items]
-    
-class Order(BaseModel):
-    OrderID: int
-    CustomerCode: str
-    ReferenceNumber: str
-    CountryCode:str
-    FullName: str
-    AddresType: str
-    AddressLine1: str
-    AddressLine2: str
-    FirstName:str
-    LastName:str
-    Phone:str
-    Email: str
-    OrderLines: list[dict]
-
-
 mycursor = mydb.cursor()
 # Read XML to DB
 @app.on_event("startup")
@@ -93,16 +65,14 @@ def read_xml_to_db():
                                 AddressLine2 varchar(255),	
                                 INDEX idx_orders_customercode (CustomerCode),
                                 INDEX idx_orders_OrderID (OrderID),
-                                FOREIGN KEY (CustomerCode) REFERENCES Customers(CustomerCode))
-                                
+                                FOREIGN KEY (CustomerCode) REFERENCES Customers(CustomerCode))                                
                                     ;"""
   create_order_line_table_query="""CREATE TABLE IF NOT EXISTS  OrderLines (	
-                                    OrderLineID INT, 
                                     ItemNum varchar(255) PRIMARY KEY,	
                                     ItemDescription varchar(255),
                                     INDEX idx_orders_ItemNum (ItemNum)
                                     );"""
-  create_order_to_orderlines="""CREATE TABLE IF NOT EXISTS OrderLineItemDetails(
+  create_order_to_orderlines="""CREATE TABLE IF NOT EXISTS OrdersToOrderLines(
                                 OrderID INT,
                                 ItemNum varchar(255),
                                 INDEX idx_orders_OrderID (OrderID),
@@ -147,10 +117,10 @@ def read_xml_to_db():
             order_line_id = order_line.get('seq') 
             item_num = order_line.find('ItemNum').text
             item_description = order_line.find('ItemDescription').text
-            order_line_table_query = 'INSERT IGNORE INTO OrderLines (OrderLineID, ItemNum, ItemDescription) VALUES (%s, %s, %s)'
-            order_line_table_values = (order_line_id, item_num, item_description)
+            order_line_table_query = 'INSERT IGNORE INTO OrderLines (ItemNum, ItemDescription) VALUES ( %s, %s)'
+            order_line_table_values = (item_num, item_description)
             mycursor.execute(order_line_table_query, order_line_table_values)
-            order_to_orderlines_query="INSERT IGNORE INTO OrderLineItemDetails(OrderID,ItemNum) VALUES (%s,%s)"
+            order_to_orderlines_query="INSERT IGNORE INTO OrdersToOrderLines(OrderID,ItemNum) VALUES (%s,%s)"
             order_to_orderlines_values=(order_id,item_num)
             mycursor.execute(order_to_orderlines_query,order_to_orderlines_values)
       mydb.commit()
@@ -162,11 +132,10 @@ async def get_data():
   # Select all the details of all orders
   select_query="""                
                 SELECT o.OrderID, o.ReferenceNumber, o.CountryCode, o.FullName, o.AddresType, o.AddressLine1, o.AddressLine2, 
-                    c.CustomerCode,c.FirstName, c.LastName, c.Phone, c.Email,
-                    ol.OrderLineID,ol.ItemNum, ol.ItemDescription
+                    c.CustomerCode,c.FirstName, c.LastName, c.Phone, c.Email,ol.ItemNum, ol.ItemDescription
                 FROM Orders o
                 INNER JOIN Customers c ON o.CustomerCode = c.CustomerCode
-                INNER JOIN OrderLineItemDetails oo ON o.OrderID = oo.OrderID
+                INNER JOIN OrdersToOrderLines oo ON o.OrderID = oo.OrderID
                 INNER JOIN OrderLines ol ON oo.ItemNum = ol.ItemNum
                 ORDER BY o.OrderID;
                 """
@@ -197,9 +166,9 @@ async def get_data():
                                   
                                   "OrderLines": []
                                   }
-      order_line = {"OrderLineID": order[12],
-                    "ItemNum": order[13],
-                    "ItemDescription": order[14]}
+      order_line = {
+                    "ItemNum": order[12],
+                    "ItemDescription": order[13]}
       orders_dict[order_id]["OrderLines"].append(order_line)
 
   # convert the dictionary values to a list
@@ -212,7 +181,7 @@ async def get_data():
 
   new_order_line_list = []
   for order_line in all_order_lines:
-    item_dict = {'ItemNum': order_line[1], 'ItemDescription': order_line[2]}
+    item_dict = {'ItemNum': order_line[0], 'ItemDescription': order_line[1]}
     new_order_line_list.append(item_dict)
       
   # return orders and items_list as a dictionary
@@ -221,26 +190,36 @@ async def get_data():
 @app.post("/order_update/")
 async def get_updated_data(request: Request):
     order_data = await request.json()
-    print("Nothing",order_data)
     mycursor = mydb.cursor()
+    print("order",order_data)
 
-    # Update OrderTable with order data
-    update_order_query = """UPDATE Orders SET CountryCode = %s, FullName = %s, AddresType = %s, AddressLine1 = %s, AddressLine2 = %s WHERE OrderID = %s"""
-    order_values = (order_data['CountryCode'], order_data['FullName'], order_data['AddresType'], order_data['AddressLine1'], order_data['AddressLine2'], order_data['OrderID'])
-    mycursor.execute(update_order_query, order_values)
+    
 
     # Delete existing order lines associated with this order
-    delete_order_to_order_lines_query = """DELETE FROM OrderLineItemDetails WHERE OrderID = %s"""
+    delete_order_to_order_lines_query = """DELETE FROM OrdersToOrderLines WHERE OrderID = %s"""
     delete_order_to_order_lines_values = (order_data['OrderID'],)
     mycursor.execute(delete_order_to_order_lines_query, delete_order_to_order_lines_values)
 
-    # Insert new order line item details for OrderID 1
-    insert_query = "INSERT INTO OrderLineItemDetails (OrderID, ItemNum) VALUES (%s, %s)"
-    for line_item in order_data['OrderLines']:
-        insert_values = (order_data['OrderID'], line_item['ItemNum'])
-        mycursor.execute(insert_query, insert_values)
-        update_query = f"UPDATE OrderLines SET ItemDescription='{line_item['ItemDescription']}' WHERE ItemNum='{line_item['ItemNum']}'"
-        mycursor.execute(update_query)
+
+    # Delete the order if there are no OrderLines
+    if len(order_data['OrderLines'])==0:
+        delete_order_from_orders="DELETE from Orders where OrderID= %s"
+        delete_order_from_orders_values=(order_data['OrderID'],)
+        mycursor.execute(delete_order_from_orders,delete_order_from_orders_values)
+    else:
+
+        # Insert new order line item details for OrderID 1
+        insert_query = "INSERT INTO OrdersToOrderLines (OrderID, ItemNum) VALUES (%s, %s)"
+        for line_item in order_data['OrderLines']:
+            insert_values = (order_data['OrderID'], line_item['ItemNum'])
+            mycursor.execute(insert_query, insert_values)
+        
+        # Update OrderTable with order data
+        update_order_query = """UPDATE Orders SET CountryCode = %s, FullName = %s, AddresType = %s, AddressLine1 = %s, AddressLine2 = %s WHERE OrderID = %s"""
+        order_values = (order_data['CountryCode'], order_data['FullName'], order_data['AddresType'], order_data['AddressLine1'], order_data['AddressLine2'], order_data['OrderID'])
+        mycursor.execute(update_order_query, order_values)
+    
+
 
     mydb.commit()
     orders_list = await get_data()
