@@ -24,6 +24,7 @@ mydb = mysql.connector.connect(**mysql_config)
 class order_items(BaseModel):
     ItemNum: str
     ItemDescription:str
+
 class updated_order_date(BaseModel):
     CountryCode:str
     FullName:str
@@ -31,6 +32,7 @@ class updated_order_date(BaseModel):
     AddressLine:str
     AddressLine2:str
     orderLines:list[order_items]
+    
 class Order(BaseModel):
     OrderID: int
     CustomerCode: str
