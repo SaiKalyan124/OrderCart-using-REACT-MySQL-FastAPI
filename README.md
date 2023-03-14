@@ -7,14 +7,22 @@ Data retrived from XML :
 ![Screenshot (13)](https://user-images.githubusercontent.com/104048277/224835780-120dac72-c052-4be5-9560-fbfd9278c6d5.png)
 
 User can amend/update  orders :
-![image](https://user-images.githubusercontent.com/104048277/224835765-3e4ea4c5-f099-4aef-a4c1-018de5960298.png)
+![image](https://user-images.githubusercontent.com/104048277/225148293-91f382d7-dbf6-48b8-a82a-4d286b768edd.png)
+![image](https://user-images.githubusercontent.com/104048277/225148334-b0d2a4c8-e17e-4327-b8e4-6013223ed8f4.png)
+
  DB design :
  
-![image](https://user-images.githubusercontent.com/104048277/224835441-aa74d2a5-c9aa-4a77-ae9d-ff050f50d8a0.png)
+![image](https://user-images.githubusercontent.com/104048277/225148363-5c088589-6bb6-4383-abfa-2bbd2803a808.png)
 
 
 ### Installation
 - Install Node.js, Python 
+- To run this project, you will need to install its dependencies.
+```
+pip install -r requirements.txt
+```
+- Command will install all the required packages listed in the `requirements.txt` file.
+
 - Clone the repository to your local machine.
 - Install the necessary dependencies.
 - Set up a MySQL database and configure the connection details in mysql_config.py.
