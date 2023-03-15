@@ -1,5 +1,5 @@
 
-# Project Name
+# Order Cart Application
 This project is a simple web application that allows users to manage orders and customers using a MySQL database. The application is built using FastAPI on the backend and React on the frontend.
 ## Screenshots
 
